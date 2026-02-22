@@ -7,7 +7,7 @@ import router from './router'
 import './assets/main.css'
 
 const app = createApp(App)
-app.config.devtools = true
+app.config.devtools = true // Añadido para depurar
 app.use(createPinia())
 app.use(router)
 
