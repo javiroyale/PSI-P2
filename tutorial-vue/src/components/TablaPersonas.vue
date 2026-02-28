@@ -4,7 +4,11 @@
   <!-- Contenedor principal del componente -->
   <div id="tabla-personas">
     <!-- Tabla para mostrar informacion de personas -->
-    <div v-if="!personas.length" class="alert alert-info" role="alert">
+    <div
+      v-if="!personas.length"
+      class="alert alert-info"
+      role="alert"
+    >
       No se han encontrado personas
     </div>
     <div v-else>
@@ -21,38 +25,74 @@
         </thead>
         <!-- Cuerpo de la tabla -->
         <tbody>
-          <tr v-for="persona in personas" :key="persona.id">
+          <tr
+            v-for="persona in personas"
+            :key="persona.id"
+          >
             <td v-if="editando === persona.id">
-              <input id="persona.nombre" v-model="persona.nombre" type="text" class="form-control"
-                data-cy="persona-nombre">
+              <input
+                id="persona.nombre"
+                v-model="persona.nombre"
+                type="text"
+                class="form-control"
+                data-cy="persona-nombre"
+              >
             </td>
             <td v-else>
               {{ persona.nombre }}
             </td>
             <td v-if="editando === persona.id">
-              <input v-model="persona.apellido" type="text" class="form-control">
+              <input
+                v-model="persona.apellido"
+                type="text"
+                class="form-control"
+              >
             </td>
             <td v-else>
               {{ persona.apellido }}
             </td>
             <td v-if="editando === persona.id">
-              <input v-model="persona.email" type="email" class="form-control">
+              <input
+                v-model="persona.email"
+                type="email"
+                class="form-control"
+              >
             </td>
             <td v-else>
               {{ persona.email }}
             </td>
             <td v-if="editando === persona.id">
-              <button class="btn btn-success" data-cy="save-button" @click="guardarPersona(persona)">&#x1F5AB;
-                Guardar</button>
-              <button class="btn btn-secondary ml-2" data-cy="cancel-button" @click="cancelarEdicion(persona)">&#x1F5D9;
+              <button
+                class="btn btn-success"
+                data-cy="save-button"
+                @click="guardarPersona(persona)"
+              >
+                &#x1F5AB;
+                Guardar
+              </button>
+              <button
+                class="btn btn-secondary ml-2"
+                data-cy="cancel-button"
+                @click="cancelarEdicion(persona)"
+              >
+                &#x1F5D9;
                 Cancelar
               </button>
             </td>
             <td v-else>
-              <button class="btn btn-info" data-cy="edit-button" @click=" editarPersona(persona)">&#x1F58A; Editar
+              <button
+                class="btn btn-info"
+                data-cy="edit-button"
+                @click=" editarPersona(persona)"
+              >
+                &#x1F58A; Editar
               </button>
-              <button class="btn btn-danger ml-2" data-cy="delete-button"
-                @click="$emit('delete-persona', persona.id)">&#x1F5D1; Eliminar
+              <button
+                class="btn btn-danger ml-2"
+                data-cy="delete-button"
+                @click="$emit('delete-persona', persona.id)"
+              >
+                &#x1F5D1; Eliminar
               </button>
             </td>
           </tr>
@@ -67,14 +107,14 @@ import { ref } from 'vue';
 // definicion del componente
 defineOptions({
   // nombre del componente
-  name: 'tabla-personas',
+  name: 'TablaPersonas',
 });
 // declaramos y damos valor por defecto para la propiedad personas
-const props = defineProps({
+defineProps({
   personas: { type: Array, default: () => [] },
 });
 
-const emit = defineEmits(['actualizar-persona']);
+const emit = defineEmits(['actualizar-persona', 'delete-persona']);
 const editando = ref(null);
 const personaEditada = ref(null);
 const editarPersona = (persona) => {

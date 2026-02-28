@@ -12,15 +12,28 @@
               <!-- Etiqueta y campo de entrada para el nombre con binding
 ,→ bidireccional v-model -->
               <label>Nombre</label>
-              <input ref="nombre" v-model="persona.nombre" type="text" class="form-control" data-cy="name"
-                :class="{ 'is-invalid': procesando && nombreInvalido }" @focus="resetEstado" />
+              <input
+                ref="nombre"
+                v-model="persona.nombre"
+                type="text"
+                class="form-control"
+                data-cy="name"
+                :class="{ 'is-invalid': procesando && nombreInvalido }"
+                @focus="resetEstado"
+              >
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label>Apellido</label>
-              <input v-model="persona.apellido" type="text" class="form-control" data-cy="surname"
-                :class="{ 'is-invalid': procesando && apellidoInvalido }" @focus="resetEstado">
+              <input
+                v-model="persona.apellido"
+                type="text"
+                class="form-control"
+                data-cy="surname"
+                :class="{ 'is-invalid': procesando && apellidoInvalido }"
+                @focus="resetEstado"
+              >
             </div>
           </div>
           <div class="col-md-4">
@@ -28,18 +41,29 @@
               <!-- Etiqueta y campo de entrada para el correo electronico con
 ,→ binding bidireccional v-model -->
               <label>Email</label>
-              <input v-model="persona.email" type="email" class="form-control" data-cy="email"
-                :class="{ 'is-invalid': procesando && emailInvalido }" @focus="resetEstado">
+              <input
+                v-model="persona.email"
+                type="email"
+                class="form-control"
+                data-cy="email"
+                :class="{ 'is-invalid': procesando && emailInvalido }"
+                @focus="resetEstado"
+              >
             </div>
           </div>
         </div>
-        <br />
+        <br>
         <!-- Segunda fila con un boton para agregar persona -->
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               <!-- Boton para agnadir persona -->
-              <button class="btn btn-primary" data-cy="add-button">Agnadir persona</button>
+              <button
+                class="btn btn-primary"
+                data-cy="add-button"
+              >
+                Agnadir persona
+              </button>
             </div>
           </div>
         </div>
@@ -48,10 +72,18 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div v-if="error && procesando" class="alert alert-danger" role="alert">
+            <div
+              v-if="error && procesando"
+              class="alert alert-danger"
+              role="alert"
+            >
               Debes rellenar todos los campos!
             </div>
-            <div v-if="correcto" class="alert alert-success" role="alert">
+            <div
+              v-if="correcto"
+              class="alert alert-success"
+              role="alert"
+            >
               La persona ha sido agregada correctamente!
             </div>
           </div>
@@ -67,7 +99,7 @@ import { ref, computed, getCurrentInstance, onMounted } from 'vue';
 // definicion del componente
 defineOptions({
   // nombre del componente
-  name: 'formulario-persona',
+  name: 'FormularioPersona',
 });
 // Declaracion de una variable reactiva "persona" con propiedades nombre,apellido y email
 const persona = ref({
@@ -119,9 +151,7 @@ const resetEstado = () => {
 };
 
 onMounted(() => {
-  // Enfocamos el campo nombre al montar el componente
-  const input = instance.refs.nombre;
-  input?.focus();
+  nombre.value?.focus(); //CAMBIOS
 });
 </script>
 <style scoped>
