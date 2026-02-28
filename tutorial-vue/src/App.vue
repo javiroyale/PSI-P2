@@ -26,56 +26,74 @@
 // Importacion del componente "TablaPersonas"
 import TablaPersonas from '@/components/TablaPersonas.vue'
 import FormularioPersona from '@/components/FormularioPersona.vue'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
-const personas = ref([{
-  id: 1,
-  nombre: 'Jon',
-  apellido: 'Nieve',
-  email: 'jon@email.com',
-},
-{
-  id: 2,
-  nombre: 'Tyrion',
-  apellido: 'Lannister',
-  email: 'tyrion@email.com',
-},
-{
-  id: 3,
-  nombre: 'Daenerys',
-  apellido: 'Targaryen',
-  email: 'daenerys@email.com',
-},
-]);
-// definimos una funcion de nombre agregarPersona que agrega una nueva,→ persona al array
-const agregarPersona = (persona) => {
-  let id = 0;
-  if (personas.value.length > 0) {
-    id = personas.value[personas.value.length - 1].id + 1;
-  }
-  personas.value = [...personas.value, { ...persona, id }];
-};
+const personas = ref([]); //BACKEND
 
-const eliminarPersona = (id) => {
-  try {
-    personas.value = personas.value.filter(
-      u => u.id !== id
-    );
-  }
-  catch (error) {
+defineOptions({
+  name: 'app',
+});
+
+
+//GET
+const listadoPersonas = async () => {
+  try{
+    const response = await fetch('https://my-json-server.typicode.com/rmarabini/people/personas/');
+    personas.value = await response.json();
+  } catch (error){
     console.error(error);
   }
 };
 
-const actualizarPersona = (id, personaActualizada) => {
+
+//POST
+const agregarPersona = async (persona) => {
   try {
-    personas.value = personas.value.map(persona =>
-      persona.id === id ? personaActualizada : persona);
-  }
-  catch (error) {
+    const response = await fetch('https://my-json-server.typicode.com/rmarabini/people/personas/', 
+    { method: 'POST', body: JSON.stringify(persona), headers: {'Content-type': 'application/json; charset=UTF-8'},
+    });
+
+    const personaCreada = await response.json();
+    personas.value = [...personas.value, personaCreada];
+  } catch (error){
     console.error(error);
   }
-}
+};
+
+
+//PUT
+const actualizarPersona = async (id, personaActualizada) => {
+  try {
+    const response = await fetch('https://my-json-server.typicode/.com/rmarabini/people/personas/'+personaActualizada.id+'/', {
+    method: 'PUT',
+    body: JSON.stringify(personaActualizada),
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    });
+    const personaActualizadaJS = await response.json();
+    personas.value = personas.value.map(u => (u.id === personaActualizada.id ? personaActualizadaJS : u));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+//DELETE
+const eliminarPersona = async (persona_id) => {
+  try{
+    await fetch('https://my-json-server.typicode.com/rmarabini/people/personas/'+persona_id+'/', {
+    method: "DELETE"
+    });
+    personas.value= personas.value.filter(u => u.id !== persona_id);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
+onMounted(() => {
+  listadoPersonas();
+});
 
 </script>
 <style>
