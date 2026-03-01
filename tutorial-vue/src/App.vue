@@ -54,6 +54,12 @@ const agregarPersona = async (persona) => {
     });
 
     const personaCreada = await response.json();
+
+    //Cambiamos el id de la persona si ya existe 
+    if (personas.value.find(p => p.id === personaCreada.id)) {
+      personaCreada.id = Date.now(); 
+    }
+
     personas.value = [...personas.value, personaCreada];
   } catch (error){
     console.error(error);
@@ -83,7 +89,7 @@ const eliminarPersona = async (persona_id) => {
     await fetch('https://my-json-server.typicode.com/rmarabini/people/personas/'+persona_id+'/', {
       method: "DELETE"
     });
-    personas.value= personas.value.filter(u => u.id !== Number(persona_id));
+    personas.value= personas.value.filter(u => u.id !== persona_id);
   } catch (error) {
     console.error(error);
   }
