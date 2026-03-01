@@ -15,7 +15,7 @@
     <p> Count is {{ store.count }}</p>
   </div>
 </template>
-<script>
+<script setup>
 import TablaPersonas from '@/components/TablaPersonas.vue'
 import FormularioPersona from '@/components/FormularioPersona.vue'
 
