@@ -1,12 +1,31 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+const COUNTER_LOCAL_STORAGE_KEY = "localCounter";
 
-  return { count, doubleCount, increment }
-})
+const getCount = () => {
+  const storedCounter = localStorage.getItem(COUNTER_LOCAL_STORAGE_KEY);
+  return storedCounter ? JSON.parse(storedCounter) : 0;
+};
+
+export const useCounterStore = defineStore("counter", () => {
+  const count = ref(getCount());
+  const singleCount = computed(() => count.value);
+  const increment = () => {
+    count.value++;
+    localStorage.setItem(
+      COUNTER_LOCAL_STORAGE_KEY,
+      JSON.stringify(count.value)
+    );
+  };
+
+  return {
+    count,
+    singleCount,
+    increment,
+  };
+});
+
+if (localStorage.getItem("state")) {
+  pinia.state.value = JSON.parse(localStorage.getItem("state"));
+}
