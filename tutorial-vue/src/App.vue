@@ -64,7 +64,7 @@ const agregarPersona = async (persona) => {
 //PUT
 const actualizarPersona = async (id, personaActualizada) => {
   try {
-    const response = await fetch('https://my-json-server.typicode/.com/rmarabini/people/personas/'+personaActualizada.id+'/', {
+    const response = await fetch('https://my-json-server.typicode.com/rmarabini/people/personas/'+personaActualizada.id+'/', {
     method: 'PUT',
     body: JSON.stringify(personaActualizada),
     headers: { 'Content-type': 'application/json; charset=UTF-8' },
@@ -81,14 +81,13 @@ const actualizarPersona = async (id, personaActualizada) => {
 const eliminarPersona = async (persona_id) => {
   try{
     await fetch('https://my-json-server.typicode.com/rmarabini/people/personas/'+persona_id+'/', {
-    method: "DELETE"
+      method: "DELETE"
     });
-    personas.value= personas.value.filter(u => u.id !== persona_id);
+    personas.value= personas.value.filter(u => u.id !== Number(persona_id));
   } catch (error) {
     console.error(error);
   }
 };
-
 
 
 onMounted(() => {
