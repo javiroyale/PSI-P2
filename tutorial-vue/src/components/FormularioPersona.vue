@@ -60,8 +60,7 @@
               <!-- Boton para agnadir persona -->
               <button
                 class="btn btn-primary"
-                data-cy="add-button"
-              >
+                data-cy="add-button">
                 Agnadir persona
               </button>
             </div>
